@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Grapes HQ
+
+Personal command center. A web app for managing ideas, tasks, saved links, and captured emails in one place.
+
+Built with Next.js, SQLite, and Drizzle ORM.
+
+## Tech Stack
+
+- **Frontend:** Next.js 16, React 19, Tailwind CSS 4
+- **UI Components:** shadcn/ui (Radix-based)
+- **Database:** SQLite via better-sqlite3 + Drizzle ORM
+- **Icons:** Lucide React
+- **AI Layer:** Hermes (this agent) for email triage and brain dump processing
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- npm
+
+### Install & Run
 
 ```bash
+cd grapes-hq
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The SQLite database lives at `~/.grapes-hq/data.db`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Views
 
-## Learn More
+- **Dashboard** — Today's items, job search tasks, interesting ideas, recent sends
+- **Kanban** — Drag ideas/tasks across status columns
+- **List** — Filterable table of all items
+- **Sends** — Saved links and bookmarks
 
-To learn more about Next.js, take a look at the following resources:
+## Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Quick-add form (Idea / Task / Send)
+- Global search (`Cmd/Ctrl + K`)
+- Tag chips with autocomplete
+- Dark theme throughout
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Adding Items via Hermes
 
-## Deploy on Vercel
+When you tell Hermes things in natural conversation, it can log items directly:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `"log this as an idea: [text]"` — saves as idea
+- `"add to #job-search: [task]"` — saves as task with tag
+- `"save this link: [url]"` — saves as send
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## API
+
+- `GET/POST /api/ideas` — list/create ideas
+- `PATCH/DELETE /api/ideas/[id]` — update/delete idea
+- `GET/POST /api/tasks` — list/create tasks
+- `PATCH/DELETE /api/tasks/[id]` — update/delete task
+- `GET/POST /api/sends` — list/create sends
+- `PATCH/DELETE /api/sends/[id]` — update/delete send
+- `GET/POST /api/emails` — list/capture emails
+- `GET /api/dashboard` — aggregated dashboard data
+- `GET /api/search?q=` — global search
+
+## License
+
+MIT
